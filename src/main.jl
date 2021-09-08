@@ -9,6 +9,7 @@ include("BayesianOptimization.jl")
 
 
 function main()
+    ## STEP 1: Gather Initial Samples
     domain = -10:.1:10
 
     # Suppose we have some process and we have n=4 known function evaluations
@@ -29,6 +30,7 @@ function main()
     Xtrue = reshape(Xtrue, (1, length(Xtrue)))
     ytrue = blackBoxProcess.(Xtrue; σnoise=0.0)
 
+    ## STEP 2: Initialize Our Model
     zero_mean(x) = 0.
     sekernel = SquaredExponential()
     gp = GaussianProcess(zero_mean, sekernel)
@@ -36,6 +38,9 @@ function main()
     conditional(bopt.gp, X, y, σnoise)
 
     
+    ## STEP 3: Get The Acquisition Function α(x)
+    
+
     # scatter(X', y)
     # plot!(
     #     domain,
